@@ -166,21 +166,19 @@ def main(
             {
                 "storage": "inline",
                 "source": """# Model Overview
-                                ## Model Summary
+    ## Model Summary
 
-                                ```
-                                {}
-                                ```
+    ```
+    {}
+    ```
 
-                        ## Model Performance
+    ## Model Performance
 
-                        **Test Accuracy**: {}
-                        **Test Loss**: {}
+    **Accuracy**: {}
+    **Loss**: {}
 
-                        """.format(
-                    model_summary_txt,
-                    test_acc,
-                    test_loss,
+    """.format(
+                    model_summary_txt, test_acc, test_loss
                 ),
                 "type": "markdown",
             },
@@ -201,6 +199,7 @@ def main(
             },
         ]
     }
+
     # return df_cm, class_list, model_summary_txt, test_acc, test_loss
     return metadata, metrics
     from collections import namedtuple
