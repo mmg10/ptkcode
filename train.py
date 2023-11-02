@@ -134,7 +134,7 @@ def main(
         class_list.append(classes[index])
 
     conf_matrix = confusion_matrix(litmodel.target, litmodel.preds)
-    confusion_matrix = confusion_matrix.numpy()
+    conf_matrix = conf_matrix.numpy()
 
     data = []
     for i in range(num_classes):
