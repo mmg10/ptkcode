@@ -35,6 +35,10 @@ class LitDataModule(pl.LightningDataModule):
 
         self.data_path = data_path
 
+        self.normalize = T.Normalize(
+            mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.243, 0.261]
+        )
+
         self.val_transform = T.Compose(
             [
                 T.Resize(224),
@@ -62,10 +66,6 @@ class LitDataModule(pl.LightningDataModule):
         self.train_data_loader = None
         self.val_data_loader = None
         self.test_data_loader = None
-
-        self.normalize = T.Normalize(
-            mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.243, 0.261]
-        )
 
     @property
     def num_classes(self):
