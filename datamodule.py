@@ -112,11 +112,11 @@ class LitDataModule(pl.LightningDataModule):
 
             subset = list(range(0, 10))
             trainset1 = torch.utils.data.Subset(trainset, subset)
-            testset = torch.utils.data.Subset(testset, list(range(0, 20)))
+            testset1 = torch.utils.data.Subset(testset, list(range(0, 20)))
             y = trainset.targets[0:10]
             yt = testset.targets[0:20]
             valset, testset, y_val, y_test = train_test_split(
-                testset,
+                testset1,
                 yt,
                 stratify=yt,
                 shuffle=True,
