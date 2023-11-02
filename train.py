@@ -168,12 +168,12 @@ def main(
             },
             {
                 "storage": "inline",
-                "source": '''# Model Overview
+                "source": """# Model Overview
 ## Model Summary
 ```
 {}
 ```
-'''.format(
+""".format(
                     model_summary_txt
                 ),
                 "type": "markdown",
@@ -197,6 +197,8 @@ def main(
     }
 
     # return df_cm, class_list, model_summary_txt, test_acc, test_loss
+    with open("mlpipeline-metrics.json", "w") as f:
+        json.dump(metrics, f)
     return metadata, metrics
     from collections import namedtuple
 
