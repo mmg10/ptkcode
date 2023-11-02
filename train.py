@@ -201,8 +201,8 @@ def main(
             },
         ]
     }
+    return metadata, metrics
+    # from collections import namedtuple
 
-    from collections import namedtuple
-
-    output = namedtuple("output", ["mlpipeline_ui_metadata", "mlpipeline_metrics"])
-    return output(json.dumps(metadata), json.dumps(metrics))
+    # output = namedtuple("output", ["mlpipeline_ui_metadata", "mlpipeline_metrics"])
+    # return output(json.dumps(metadata), json.dumps(metrics))
