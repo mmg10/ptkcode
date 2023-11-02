@@ -72,7 +72,8 @@ def main(
     Path(tensorboard_root).mkdir(parents=True, exist_ok=True)
     Path(checkpoint_dir).mkdir(parents=True, exist_ok=True)
 
-    EPOCHS = trainer_args.get("epochs", 1)
+    EPOCHS = int(trainer_args.get("epochs", 1))
+    del trainer_args["epochs"]
 
     datamodule = LitDataModule(
         data_path=data_path, num_workers=0, batch_size=16, **data_module_args
@@ -80,7 +81,7 @@ def main(
     datamodule.setup()
 
     trainer = pl.Trainer(
-        # max_epochs=EPOCHS,
+        max_epochs=EPOCHS,
         log_every_n_steps=1,
         # enable_model_summary=False,
         # enable_checkpointing=False,
