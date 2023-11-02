@@ -147,61 +147,61 @@ def main(
     # Save the DataFrame to a CSV file
     cm_csv = df_cm.to_csv(header=False, index=False)
 
-    metadata = {
-        "outputs": [
-            {
-                "type": "confusion_matrix",
-                "format": "csv",
-                "schema": [
-                    {"name": "target", "type": "CATEGORY"},
-                    {"name": "predicted", "type": "CATEGORY"},
-                    {"name": "count", "type": "NUMBER"},
-                ],
-                "target_col": "actual",
-                "predicted_col": "predicted",
-                "source": cm_csv,
-                "storage": "inline",
-                "labels": class_list,
-            },
-            {
-                "storage": "inline",
-                "source": """# Model Overview
-                                ## Model Summary
+    # metadata = {
+    #     "outputs": [
+    #         {
+    #             "type": "confusion_matrix",
+    #             "format": "csv",
+    #             "schema": [
+    #                 {"name": "target", "type": "CATEGORY"},
+    #                 {"name": "predicted", "type": "CATEGORY"},
+    #                 {"name": "count", "type": "NUMBER"},
+    #             ],
+    #             "target_col": "actual",
+    #             "predicted_col": "predicted",
+    #             "source": cm_csv,
+    #             "storage": "inline",
+    #             "labels": class_list,
+    #         },
+    #         {
+    #             "storage": "inline",
+    #             "source": """# Model Overview
+    #                             ## Model Summary
 
-                                ```
-                                {}
-                                ```
+    #                             ```
+    #                             {}
+    #                             ```
 
-                        ## Model Performance
+    #                     ## Model Performance
 
-                        **Test Accuracy**: {}
-                        **Test Loss**: {}
+    #                     **Test Accuracy**: {}
+    #                     **Test Loss**: {}
 
-                        """.format(
-                    model_summary_txt,
-                    test_acc,
-                    test_loss,
-                ),
-                "type": "markdown",
-            },
-        ]
-    }
+    #                     """.format(
+    #                 model_summary_txt,
+    #                 test_acc,
+    #                 test_loss,
+    #             ),
+    #             "type": "markdown",
+    #         },
+    #     ]
+    # }
 
-    metrics = {
-        "metrics": [
-            {
-                "name": "model_accuracy",
-                "numberValue": float(test_acc),
-                "format": "PERCENTAGE",
-            },
-            {
-                "name": "model_loss",
-                "numberValue": float(test_loss),
-                "format": "PERCENTAGE",
-            },
-        ]
-    }
-    return metadata, metrics
+    # metrics = {
+    #     "metrics": [
+    #         {
+    #             "name": "model_accuracy",
+    #             "numberValue": float(test_acc),
+    #             "format": "PERCENTAGE",
+    #         },
+    #         {
+    #             "name": "model_loss",
+    #             "numberValue": float(test_loss),
+    #             "format": "PERCENTAGE",
+    #         },
+    #     ]
+    # }
+    return cm_csv, class_list, model_summary_txt, test_acc, test_loss
     # from collections import namedtuple
 
     # output = namedtuple("output", ["mlpipeline_ui_metadata", "mlpipeline_metrics"])
