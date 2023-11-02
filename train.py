@@ -139,7 +139,10 @@ def main(
     data = []
     for i in range(num_classes):
         for j in range(num_classes):
-            data.append({"pred": i, "target": j, "count": conf_matrix[i, j]})
+            # data.append({"pred": i, "target": j, "count": conf_matrix[i, j]})
+            data.append(
+                {"pred": classes[i], "target": classes[j], "count": conf_matrix[i, j]}
+            )
 
     # Create a DataFrame from the list of dictionaries
     df_cm = pd.DataFrame(data)
