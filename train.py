@@ -102,7 +102,7 @@ def main(
     best_model_path = checkpoint_callback.best_model_path
     best_model = LitModel.load_from_checkpoint(best_model_path)
 
-    torch.save(best_model.model.state_dict(), Path("/tmp") / "model.pt")
+    torch.save(best_model.model.state_dict(), "/tmp/model.pt")
 
     # Model Summary
     model_summary_txt = model_sum_logger._summary(trainer, litmodel)
