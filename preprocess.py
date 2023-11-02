@@ -75,7 +75,7 @@ def preprocess():
         row = f"| {label_names[label]} | {counts} |"
         rows.append(row)
 
-    header = "| Label | Total Count | Train Count | Val Count | Test Count |\n|-------|---------|---------|---------|-------|"
+    header = "# Label Count \n| Label | Total Count | Train Count | Val Count | Test Count |\n|-------|---------|---------|---------|-------|"
     table = "\n".join(rows)
     markdown_table = f"{header}\n{table}"
 
@@ -86,7 +86,6 @@ def preprocess():
             {
                 "storage": "inline",
                 "source": """
-# Label Counts
     
     {}
     """.format(
