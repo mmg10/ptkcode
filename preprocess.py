@@ -73,9 +73,10 @@ def preprocess():
             {
                 "storage": "inline",
                 "source": """
-    
-    {}
-    """.format(
+```
+{}
+```
+""".format(
                     markdown_table
                 ),
                 "type": "markdown",
