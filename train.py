@@ -5,7 +5,6 @@ import torch
 from pathlib import Path
 import pytorch_lightning as pl
 
-from utils import parse_input_args
 from pl.loggers import TensorBoardLogger
 
 from pl.callbacks import (
