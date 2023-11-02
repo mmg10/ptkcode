@@ -176,11 +176,11 @@ def main(
 
 ## Model Performance
 
-**Accuracy**: {}
+**Accuracy**: {} \n
 **Loss**: {}
 
 """.format(
-                    model_summary_txt, test_acc, test_loss
+                model_summary_txt, test_acc, test_loss
                 ),
                 "type": "markdown",
             },
@@ -188,15 +188,19 @@ def main(
     }
 
     metrics = {
-      'metrics': [{
-          'name': 'model_accuracy',
-          'numberValue':  float(test_acc),
-          'format' : "PERCENTAGE"
-        },{
-          'name': 'model_loss',
-          'numberValue':  float(test_loss),
-          'format' : "PERCENTAGE"
-        }]}
+        "metrics": [
+            {
+                "name": "model_accuracy",
+                "numberValue": float(test_acc),
+                "format": "PERCENTAGE",
+            },
+            {
+                "name": "model_loss",
+                "numberValue": float(test_loss),
+                "format": "PERCENTAGE",
+            },
+        ]
+    }
 
     # return df_cm, class_list, model_summary_txt, test_acc, test_loss
     with open("mlpipeline-metrics.json", "w") as f:
