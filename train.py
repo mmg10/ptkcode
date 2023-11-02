@@ -94,9 +94,6 @@ def main(
     trainer.fit(litmodel, datamodule)
 
     print(":: Saving  Model")
-    torch.save(
-        litmodel,
-    )
 
     # Load bets checkpoint
     best_model_path = checkpoint_callback.best_model_path
