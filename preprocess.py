@@ -85,10 +85,9 @@ def preprocess():
         "outputs": [
             {
                 "storage": "inline",
-                "source": """# Model Overview
-    ## Label Count
-    {}
-    """.format(
+                "source": """# Label Counts
+    
+    {}""".format(
                     markdown_table
                 ),
                 "type": "markdown",
