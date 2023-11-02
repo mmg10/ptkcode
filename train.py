@@ -80,7 +80,7 @@ def main(
     datamodule.setup()
 
     trainer = pl.Trainer(
-        max_epochs=EPOCHS,
+        # max_epochs=EPOCHS,
         log_every_n_steps=1,
         enable_model_summary=False,
         enable_checkpointing=False,
