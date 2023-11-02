@@ -10,8 +10,6 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 
 if __name__ == "__main__":
-
-
     output_path = args["output_path"]
 
     Path(output_path).mkdir(parents=True, exist_ok=True)
@@ -80,17 +78,34 @@ if __name__ == "__main__":
     label_counts = dict(zip(*np.unique(y_array, return_counts=True)))
     label_dict = {}
     TOTAL_COUNT = len(y)
+    rows = []
     for key, value in label_counts.items():
         print(
             "Label Counts of [{}]({}) : {}".format(key, label_names[key].upper(), value)
         )
         label_dict[label_names[key].upper()] = int(value)
+        row = f"| {key} | {value} |"
+        rows.append(row)
 
-    label_dict["TOTAL_COUNT"] = int(TOTAL_COUNT)
+    rows.append(f"| {TOTAL_COUNT} | {value} |")
+    
+    header = "| Label | Count |\n|-------|-------|"
+    table = "\n".join(rows)
+    markdown_table = f"{header}\n{'\n'.join(rows)}"
 
-    markdown_dict = {"storage": "inline", "source": label_dict}
+    # label_dict["TOTAL_COUNT"] = int(TOTAL_COUNT)
 
-    visualization = Visualization(
-        mlpipeline_ui_metadata=args["mlpipeline_ui_metadata"],
-        markdown=markdown_dict,
-    )
+    metadata = {
+        "outputs": [
+            {
+                "storage": "inline",
+                "source": """# Model Overview
+    ## Label Count
+    {}
+    """.format(
+                    markdown_table
+                ),
+                "type": "markdown",
+            },
+        ]
+    }
