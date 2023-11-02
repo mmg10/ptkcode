@@ -27,7 +27,7 @@ EPOCHS = 1
 
 
 def main(
-    trainer_args,
+    trainer_args=None,
     tensorboard_root="output/tensorboard",
     checkpoint_dir="output/train/models",
     data_path="output/processing",
