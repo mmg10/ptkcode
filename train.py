@@ -54,7 +54,7 @@ def main(
 
     checkpoint_callback = ModelCheckpoint(
         dirpath=checkpoint_dir,
-        filename="cifar10_{epoch:02d}",
+        # filename="cifar10_{epoch:02d}",
         filename="epoch={epoch}-val_acc={val/acc:.2f}",
         auto_insert_metric_name=False,
         # save_top_k=1,
