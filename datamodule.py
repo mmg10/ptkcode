@@ -110,7 +110,10 @@ class LitDataModule(pl.LightningDataModule):
             # valset = ImageFolder(self.val_data_dir, transform=self.val_transform)
             # testset = ImageFolder(self.test_data_dir, transform=self.val_transform)
 
-            y = trainset.targets
+            subset = list(range(0, 10))
+            trainset1 = torch.utils.data.Subset(trainset, subset)
+            testset = torch.utils.data.Subset(testset, list(range(0, 20)))
+            y = trainset.targets[0:10]
             valset, testset, y_val, y_test = train_test_split(
                 testset,
                 y,
@@ -120,7 +123,7 @@ class LitDataModule(pl.LightningDataModule):
                 random_state=RANDOM_SEED,
             )
             self.train_dataset, self.val_dataset, self.test_dataset = (
-                trainset,
+                trainset1,
                 valset,
                 testset,
             )
