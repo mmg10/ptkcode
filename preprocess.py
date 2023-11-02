@@ -1,11 +1,8 @@
 # !/usr/bin/env/python3
 
-import subprocess
 from pathlib import Path
-from argparse import ArgumentParser
 import torchvision
 import torch
-import webdataset as wds
 from sklearn.model_selection import train_test_split
 import numpy as np
 
