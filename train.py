@@ -176,11 +176,11 @@ def main(
 
 ## Model Performance
 
-**Accuracy**: {} \n
+**Accuracy**: {} % \n
 **Loss**: {}
 
 """.format(
-                model_summary_txt, test_acc, test_loss
+                model_summary_txt, test_acc*100, test_loss
                 ),
                 "type": "markdown",
             },
