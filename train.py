@@ -82,8 +82,8 @@ def main(
     trainer = pl.Trainer(
         # max_epochs=EPOCHS,
         log_every_n_steps=1,
-        enable_model_summary=False,
-        enable_checkpointing=False,
+        # enable_model_summary=False,
+        # enable_checkpointing=False,
         **trainer_args,
         **trainer_add_args,
     )
