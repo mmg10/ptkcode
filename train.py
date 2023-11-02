@@ -168,10 +168,12 @@ def main(
             },
             {
                 "storage": "inline",
-                "source": """# Model Overview
-    ## Model Summary
-    {}
-    """.format(
+                "source": '''# Model Overview
+## Model Summary
+```
+{}
+```
+'''.format(
                     model_summary_txt
                 ),
                 "type": "markdown",
