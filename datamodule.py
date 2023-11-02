@@ -60,7 +60,7 @@ class LitDataModule(pl.LightningDataModule):
         self.args = kwargs
 
         self.train_dataset = None
-        self.valid_dataset = None
+        self.val_dataset = None
         self.test_dataset = None
 
         self.train_data_loader = None
