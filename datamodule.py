@@ -120,7 +120,7 @@ class LitDataModule(pl.LightningDataModule):
                 yt,
                 stratify=yt,
                 shuffle=True,
-                test_size=0.2,
+                test_size=0.5,
                 random_state=RANDOM_SEED,
             )
             self.train_dataset, self.val_dataset, self.test_dataset = (
