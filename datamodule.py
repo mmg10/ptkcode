@@ -95,9 +95,9 @@ class LitDataModule(pl.LightningDataModule):
         val_data_dir = data_path + "/val"
         test_data_dir = data_path + "/test"
 
-        train_count = self.get_num_files(train_data_dir)
-        val_count = self.get_num_files(val_data_dir)
-        test_count = self.get_num_files(test_data_dir)
+        # train_count = self.get_num_files(train_data_dir)
+        # val_count = self.get_num_files(val_data_dir)
+        # test_count = self.get_num_files(test_data_dir)
 
         if not self.train_dataset and not self.val_dataset and not self.test_dataset:
             trainset = torchvision.datasets.CIFAR10(
