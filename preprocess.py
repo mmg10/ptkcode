@@ -9,59 +9,33 @@ import webdataset as wds
 from sklearn.model_selection import train_test_split
 import numpy as np
 
-if __name__ == "__main__":
-    output_path = args["output_path"]
+
+def preprocess():
+    output_path = "."
 
     Path(output_path).mkdir(parents=True, exist_ok=True)
 
     trainset = torchvision.datasets.CIFAR10(root="./", train=True, download=True)
     testset = torchvision.datasets.CIFAR10(root="./", train=False, download=True)
 
-    subset = list(range(0, 1000))
-    trainset1 = torch.utils.data.Subset(trainset, subset)
-    testset = torch.utils.data.Subset(testset, list(range(0, 100)))
     Path(output_path + "/train").mkdir(parents=True, exist_ok=True)
     Path(output_path + "/val").mkdir(parents=True, exist_ok=True)
     Path(output_path + "/test").mkdir(parents=True, exist_ok=True)
 
     RANDOM_SEED = 25
 
-    y = trainset.targets[0:1000]
+    y = trainset.targets
     trainset, valset, y_train, y_val = train_test_split(
-        trainset1, y, stratify=y, shuffle=True, test_size=0.2, random_state=RANDOM_SEED
+        trainset, y, stratify=y, shuffle=True, test_size=0.2, random_state=RANDOM_SEED
     )
 
-    for name in [(trainset, "train"), (valset, "val"), (testset, "test")]:
-        with wds.ShardWriter(
-            output_path + "/" + str(name[1]) + "/" + str(name[1]) + "-%d.tar",
-            maxcount=1000,
-        ) as sink:
-            for index, (image, cls) in enumerate(name[0]):
-                sink.write({"__key__": "%06d" % index, "ppm": image, "cls": cls})
-
-    entry_point = ["ls", "-R", output_path]
-    run_code = subprocess.run(
-        entry_point, stdout=subprocess.PIPE
-    )  # pylint: disable=subprocess-run-check
-    print(run_code.stdout)
-
-    visualization_arguments = {
-        "output": {
-            "mlpipeline_ui_metadata": args["mlpipeline_ui_metadata"],
-            "dataset_download_path": args["output_path"],
-        },
-    }
-
-    markdown_dict = {"storage": "inline", "source": visualization_arguments}
-
-    print("Visualization arguments: ", markdown_dict)
-
-    visualization = Visualization(
-        mlpipeline_ui_metadata=args["mlpipeline_ui_metadata"],
-        markdown=markdown_dict,
-    )
-
+    yv = valset.targets
+    yt = testset.targets
     y_array = np.array(y)
+
+    y_train_array = np.array(y)
+    y_val_array = np.array(yv)
+    y_test_array = np.array(yt)
 
     label_names = [
         "airplane",
@@ -75,23 +49,39 @@ if __name__ == "__main__":
         "ship",
         "truck",
     ]
-    label_counts = dict(zip(*np.unique(y_array, return_counts=True)))
+    label_counts = dict(zip(*np.unique(y_array, return_counts=True)))  # fix this
+    train_label_counts = dict(zip(*np.unique(y_train_array, return_counts=True)))
+    val_label_counts = dict(zip(*np.unique(y_val_array, return_counts=True)))
+    test_label_counts = dict(zip(*np.unique(y_test_array, return_counts=True)))
+
+    label_counts = [
+        label_counts,
+        train_label_counts,
+        val_label_counts,
+        test_label_counts,
+    ]
+
     label_dict = {}
     TOTAL_COUNT = len(y)
     rows = []
-    for key, value in label_counts.items():
-        print(
-            "Label Counts of [{}]({}) : {}".format(key, label_names[key].upper(), value)
-        )
-        label_dict[label_names[key].upper()] = int(value)
-        row = f"| {key} | {value} |"
+    # for key, value in label_counts.items():
+    #     print(
+    #         "Label Counts of [{}]({}) : {}".format(key, label_names[key].upper(), value)
+    #     )
+    #     label_dict[label_names[key].upper()] = int(value)
+    #     row = f"| {key} | {value} |"
+    #     rows.append(row)
+
+    for label in label_counts[0].items():
+        counts = " | ".join(str(d[label]) for d in label_counts)
+        row = f"| {label} | {counts} |"
         rows.append(row)
 
-    rows.append(f"| {TOTAL_COUNT} | {value} |")
-    
-    header = "| Label | Count |\n|-------|-------|"
+    # rows.append(f"| {TOTAL_COUNT} | {value} |")
+
+    header = "| Label | Total Count | Train Count | Val Count | Test Count |\n|-------|---------|---------|---------|-------|"
     table = "\n".join(rows)
-    markdown_table = f"{header}\n{'\n'.join(rows)}"
+    markdown_table = f"{header}\n{table}"
 
     # label_dict["TOTAL_COUNT"] = int(TOTAL_COUNT)
 
@@ -109,3 +99,13 @@ if __name__ == "__main__":
             },
         ]
     }
+
+    return metadata
+
+    # (
+    #     label_names,
+    #     label_counts,
+    #     train_label_counts,
+    #     val_label_counts,
+    #     test_label_counts,
+    # )
