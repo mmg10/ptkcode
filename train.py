@@ -201,7 +201,7 @@ def main(
     #         },
     #     ]
     # }
-    return cm_csv, class_list, model_summary_txt, test_acc, test_loss
+    return df_cm, class_list, model_summary_txt, test_acc, test_loss
     # from collections import namedtuple
 
     # output = namedtuple("output", ["mlpipeline_ui_metadata", "mlpipeline_metrics"])
