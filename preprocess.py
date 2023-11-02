@@ -65,17 +65,18 @@ def preprocess():
         rows.append(row)
 
     header = "| Label | Total Count | Train Count | Val Count | Test Count |\n|-------|---------|---------|---------|-------|"
-    table = "\n".join(rows)
+    table = "  \n".join(rows)
     markdown_table = f"{header}\n{table}"
 
     metadata = {
         "outputs": [
             {
                 "storage": "inline",
-                "source": """# Label Count
+                "source": """# Data Summary
+## Label Counts
 ```
 {}
-```
+``` 
 """.format(
                     markdown_table
                 ),
