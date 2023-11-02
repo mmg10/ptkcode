@@ -26,13 +26,14 @@ def preprocess():
         trainset, y, stratify=y, shuffle=True, test_size=0.2, random_state=RANDOM_SEED
     )
 
-    yv = valset.targets
-    yt = testset.targets
-    y_array = np.array(y)
+    y_train = y_train
+    y_val = y_val
+    ytest = testset.targets
 
-    y_train_array = np.array(y)
-    y_val_array = np.array(yv)
-    y_test_array = np.array(yt)
+    y_train_array = np.array(y_train)
+    y_val_array = np.array(y_val)
+    y_test_array = np.array(ytest)
+    y_array = np.concatenate((y_train_array, y_val_array, y_test_array))
 
     label_names = [
         "airplane",
@@ -51,7 +52,7 @@ def preprocess():
     val_label_counts = dict(zip(*np.unique(y_val_array, return_counts=True)))
     test_label_counts = dict(zip(*np.unique(y_test_array, return_counts=True)))
 
-    label_counts = [
+    all_label_counts = [
         label_counts,
         train_label_counts,
         val_label_counts,
@@ -69,12 +70,10 @@ def preprocess():
     #     row = f"| {key} | {value} |"
     #     rows.append(row)
 
-    for label in label_counts[0].items():
-        counts = " | ".join(str(d[label]) for d in label_counts)
-        row = f"| {label} | {counts} |"
+    for label in all_label_counts[0].keys():
+        counts = " | ".join(str(d[label]) for d in all_label_counts)
+        row = f"| {label_names[label]} | {counts} |"
         rows.append(row)
-
-    # rows.append(f"| {TOTAL_COUNT} | {value} |")
 
     header = "| Label | Total Count | Train Count | Val Count | Test Count |\n|-------|---------|---------|---------|-------|"
     table = "\n".join(rows)
