@@ -125,13 +125,13 @@ def main(
         "truck",
     ]
 
-    target_index_list = list(set(litmodel.target))
+    # target_index_list = list(set(litmodel.target))
 
-    num_classes = len(target_index_list)
+    num_classes = len(classes)
 
-    class_list = []
-    for index in target_index_list:
-        class_list.append(classes[index])
+    # class_list = []
+    # for index in target_index_list:
+    #     class_list.append(classes[index])
 
     conf_matrix = confusion_matrix(litmodel.target, litmodel.preds)
     # conf_matrix = conf_matrix.numpy()
@@ -161,24 +161,15 @@ def main(
                 "predicted_col": "predicted",
                 "source": cm_csv,
                 "storage": "inline",
-                "labels": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                "labels": classes,
             },
             {
                 "storage": "inline",
                 "source": """# Model Overview
     ## Model Summary
-
-    ```
     {}
-    ```
-
-    ## Model Performance
-
-    **Accuracy**: {}
-    **Loss**: {}
-
     """.format(
-                    model_summary_txt, test_acc, test_loss
+                    model_summary_txt
                 ),
                 "type": "markdown",
             },
