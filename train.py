@@ -5,9 +5,9 @@ import torch
 from pathlib import Path
 import pytorch_lightning as pl
 
-from pl.loggers import TensorBoardLogger
+from pytorch_lightning.loggers import TensorBoardLogger
 
-from pl.callbacks import (
+from pytorch_lightning.callbacks import (
     EarlyStopping,
     LearningRateMonitor,
     ModelCheckpoint,
